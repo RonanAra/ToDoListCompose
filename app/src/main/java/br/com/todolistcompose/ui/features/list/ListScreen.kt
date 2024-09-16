@@ -24,10 +24,12 @@ import br.com.todolistcompose.ui.components.TodoItem
 import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
 
 @Composable
-fun ListScreen() {
+fun ListScreen(
+    navigateToAddEditScreen: (id: Long?) -> Unit
+) {
     ListContent(
         todos = listOf(),
-        onAddClick = {},
+        onAddClick = { navigateToAddEditScreen(it) },
         onItemClick = {},
         onCompletedChange = {},
         onDeleteClick = {}
@@ -37,7 +39,7 @@ fun ListScreen() {
 @Composable
 fun ListContent(
     todos: List<Todo>,
-    onAddClick: () -> Unit,
+    onAddClick: (id: Long?) -> Unit,
     onCompletedChange: (Boolean) -> Unit,
     onDeleteClick: () -> Unit,
     onItemClick: () -> Unit,
@@ -45,7 +47,7 @@ fun ListContent(
     Scaffold(
         modifier = Modifier,
         floatingActionButton = {
-            AddFabButton(onAddClick = onAddClick)
+            AddFabButton(onAddClick = { onAddClick(null) })
         }
     ) { paddingValues ->
         LazyColumn(
