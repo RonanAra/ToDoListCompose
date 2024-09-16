@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ToDoListCompose</string>
+    <string name="fab_add_description">Add</string>
+    <string name="ic_delete_description">Delete</string>
+    <string name="fab_completed_description">Completed</string>
+    <string name="description_place_holder">Description (optional)</string>
+    <string name="title_place_holder">Title</string>
 </resources>
