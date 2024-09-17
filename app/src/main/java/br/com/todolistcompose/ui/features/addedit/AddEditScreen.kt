@@ -12,26 +12,76 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.todolistcompose.R
+import br.com.todolistcompose.data.database.TodoDatabaseProvider
+import br.com.todolistcompose.data.repository.TodoRepositoryImpl
+import br.com.todolistcompose.ui.UiEvent
 import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
 
 @Composable
-fun AddEditScreen() {
-    AddEditContent(onCompleted = {})
+fun AddEditScreen(
+    navigateBack: () -> Unit
+) {
+    val context = LocalContext.current.applicationContext
+    val viewModel = viewModel<AddEditViewModel> {
+        AddEditViewModel(
+            repository = TodoRepositoryImpl(
+                dao = TodoDatabaseProvider.provide(context).todoDao
+            )
+        )
+    }
+    val snackBarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.Navigate<*> -> {}
+                is UiEvent.ShowSnackBar -> {
+                    snackBarHostState.showSnackbar(message = uiEvent.message)
+                }
+                UiEvent.NavigateBack -> navigateBack()
+            }
+        }
+    }
+
+    AddEditContent(
+        title = viewModel.title,
+        description = viewModel.description,
+        onEvent = viewModel::onEvent,
+        snackBarHostState = snackBarHostState
+    )
 }
 
 @Composable
-fun AddEditContent(onCompleted: () -> Unit) {
+fun AddEditContent(
+    title: String,
+    description: String?,
+    onEvent: (AddEditEvent) -> Unit,
+    snackBarHostState: SnackbarHostState
+) {
     Scaffold(
         modifier = Modifier,
         floatingActionButton = {
-            CompletedFab(onCompleted = onCompleted)
+            CompletedFab(
+                onCompleted = {
+                    onEvent(AddEditEvent.Save)
+                }
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
         }
     ) { paddingValues ->
         Column(
@@ -41,8 +91,10 @@ fun AddEditContent(onCompleted: () -> Unit) {
         ) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = title,
+                onValueChange = { title ->
+                    onEvent(AddEditEvent.TitleChanged(title))
+                },
                 placeholder = {
                     Text(text = stringResource(R.string.title_place_holder))
                 }
@@ -50,8 +102,10 @@ fun AddEditContent(onCompleted: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = description.orEmpty(),
+                onValueChange = { desc ->
+                    onEvent(AddEditEvent.DescriptionChanged(desc))
+                },
                 placeholder = {
                     Text(text = stringResource(R.string.description_place_holder))
                 }
@@ -77,7 +131,10 @@ private fun CompletedFab(
 fun Preview() {
     ToDoListComposeTheme {
         AddEditContent(
-            onCompleted = {}
+            title = "",
+            description = null,
+            onEvent = {},
+            snackBarHostState = SnackbarHostState()
         )
     }
 }
