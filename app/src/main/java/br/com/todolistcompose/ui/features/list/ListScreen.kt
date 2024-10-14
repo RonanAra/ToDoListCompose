@@ -12,11 +12,17 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.todolistcompose.R
+import br.com.todolistcompose.data.database.TodoDatabaseProvider
+import br.com.todolistcompose.data.repository.TodoRepositoryImpl
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo1
 import br.com.todolistcompose.domain.entity.todo2
@@ -27,8 +33,16 @@ import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
 fun ListScreen(
     navigateToAddEditScreen: (id: Long?) -> Unit
 ) {
+    val context = LocalContext.current.applicationContext
+    val database = TodoDatabaseProvider.provide(context)
+    val repository = TodoRepositoryImpl(database.todoDao)
+    val viewModel = viewModel<ListViewModel> {
+        ListViewModel(repository = repository)
+    }
+    val todos by viewModel.todos.collectAsState()
+
     ListContent(
-        todos = listOf(),
+        todos = todos,
         onAddClick = { navigateToAddEditScreen(it) },
         onItemClick = {},
         onCompletedChange = {},
