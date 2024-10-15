@@ -3,6 +3,7 @@ package br.com.todolistcompose.data.repository
 import br.com.todolistcompose.data.database.dao.TodoDao
 import br.com.todolistcompose.data.database.entity.TodoEntity
 import br.com.todolistcompose.domain.entity.Todo
+import br.com.todolistcompose.domain.mapper.TodoEntityToTodoMapper
 import br.com.todolistcompose.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -45,24 +46,14 @@ class TodoRepositoryImpl(
     override fun getAll(): Flow<List<Todo>> {
         return dao.getAll().map { entities ->
             entities.map { entity ->
-                Todo(
-                    id = entity.id,
-                    title = entity.title,
-                    description = entity.description,
-                    isCompleted = entity.isCompleted
-                )
+                TodoEntityToTodoMapper.mapFrom(entity)
             }
         }
     }
 
     override suspend fun getById(id: Long): Todo? {
         return dao.getById(id)?.let { entity ->
-            Todo(
-                id = entity.id,
-                title = entity.title,
-                description = entity.description,
-                isCompleted = entity.isCompleted
-            )
+            TodoEntityToTodoMapper.mapFrom(entity)
         }
     }
 }
