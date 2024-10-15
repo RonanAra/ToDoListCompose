@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.features.list
+package br.com.todolistcompose.presentation.features.list
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -27,10 +27,10 @@ import br.com.todolistcompose.data.repository.TodoRepositoryImpl
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo1
 import br.com.todolistcompose.domain.entity.todo2
-import br.com.todolistcompose.ui.UiEvent
-import br.com.todolistcompose.ui.components.TodoItem
-import br.com.todolistcompose.ui.navigation.TodoDestinations
-import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
+import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.components.TodoItem
+import br.com.todolistcompose.presentation.navigation.TodoDestinations
+import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 
 @Composable
 fun ListScreen(

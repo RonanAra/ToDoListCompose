@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.components
+package br.com.todolistcompose.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import br.com.todolistcompose.R
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo2
-import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
+import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 
 @Composable
 fun TodoItem(

@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.navigation
+package br.com.todolistcompose.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

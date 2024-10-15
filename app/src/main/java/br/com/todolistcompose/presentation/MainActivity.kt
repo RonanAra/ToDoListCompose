@@ -1,10 +1,10 @@
-package br.com.todolistcompose.ui
+package br.com.todolistcompose.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import br.com.todolistcompose.ui.navigation.TodoNavHost
-import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
+import br.com.todolistcompose.presentation.navigation.TodoNavHost
+import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 
 class MainActivity : ComponentActivity() {
 

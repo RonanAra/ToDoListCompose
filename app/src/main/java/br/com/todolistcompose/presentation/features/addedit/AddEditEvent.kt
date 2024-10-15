@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.features.addedit
+package br.com.todolistcompose.presentation.features.addedit
 
 sealed interface AddEditEvent {
     data class TitleChanged(val title: String) : AddEditEvent

@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.features.addedit
+package br.com.todolistcompose.presentation.features.addedit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,8 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.todolistcompose.R
 import br.com.todolistcompose.data.database.TodoDatabaseProvider
 import br.com.todolistcompose.data.repository.TodoRepositoryImpl
-import br.com.todolistcompose.ui.UiEvent
-import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
+import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 
 @Composable
 fun AddEditScreen(

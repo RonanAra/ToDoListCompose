@@ -1,10 +1,10 @@
-package br.com.todolistcompose.ui.features.list
+package br.com.todolistcompose.presentation.features.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.todolistcompose.domain.repository.TodoRepository
-import br.com.todolistcompose.ui.UiEvent
-import br.com.todolistcompose.ui.navigation.TodoDestinations.AddEditRoute
+import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.navigation.TodoDestinations.AddEditRoute
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow

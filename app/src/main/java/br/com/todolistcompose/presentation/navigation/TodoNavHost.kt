@@ -1,13 +1,13 @@
-package br.com.todolistcompose.ui.navigation
+package br.com.todolistcompose.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import br.com.todolistcompose.ui.features.addedit.AddEditScreen
-import br.com.todolistcompose.ui.features.list.ListScreen
-import br.com.todolistcompose.ui.navigation.TodoDestinations.*
+import br.com.todolistcompose.presentation.features.addedit.AddEditScreen
+import br.com.todolistcompose.presentation.features.list.ListScreen
+import br.com.todolistcompose.presentation.navigation.TodoDestinations.*
 
 @Composable
 fun TodoNavHost() {

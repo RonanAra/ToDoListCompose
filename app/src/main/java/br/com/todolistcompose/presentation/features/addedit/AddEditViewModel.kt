@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.features.addedit
+package br.com.todolistcompose.presentation.features.addedit
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.todolistcompose.domain.repository.TodoRepository
-import br.com.todolistcompose.ui.UiEvent
+import br.com.todolistcompose.presentation.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch

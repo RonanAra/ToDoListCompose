@@ -1,4 +1,4 @@
-package br.com.todolistcompose.ui.features.list
+package br.com.todolistcompose.presentation.features.list
 
 sealed interface ListEvent {
     data class Delete(val id: Long) : ListEvent
