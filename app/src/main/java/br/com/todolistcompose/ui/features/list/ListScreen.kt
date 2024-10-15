@@ -12,6 +12,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,7 +27,9 @@ import br.com.todolistcompose.data.repository.TodoRepositoryImpl
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo1
 import br.com.todolistcompose.domain.entity.todo2
+import br.com.todolistcompose.ui.UiEvent
 import br.com.todolistcompose.ui.components.TodoItem
+import br.com.todolistcompose.ui.navigation.TodoDestinations
 import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
 
 @Composable
@@ -41,27 +44,40 @@ fun ListScreen(
     }
     val todos by viewModel.todos.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.Navigate<*> -> {
+                    when (uiEvent.route) {
+                        is TodoDestinations.AddEditRoute -> {
+                            navigateToAddEditScreen(uiEvent.route.id)
+                        }
+                    }
+                }
+                else -> {}
+            }
+        }
+    }
+
     ListContent(
         todos = todos,
-        onAddClick = { navigateToAddEditScreen(it) },
-        onItemClick = {},
-        onCompletedChange = {},
-        onDeleteClick = {}
+        onEvent = viewModel::onEvent
     )
 }
 
 @Composable
 fun ListContent(
     todos: List<Todo>,
-    onAddClick: (id: Long?) -> Unit,
-    onCompletedChange: (Boolean) -> Unit,
-    onDeleteClick: () -> Unit,
-    onItemClick: () -> Unit,
+    onEvent: (ListEvent) -> Unit
 ) {
     Scaffold(
         modifier = Modifier,
         floatingActionButton = {
-            AddFabButton(onAddClick = { onAddClick(null) })
+            AddFabButton(
+                onClick = {
+                    onEvent(ListEvent.AddEdit(null))
+                }
+            )
         }
     ) { paddingValues ->
         LazyColumn(
@@ -72,9 +88,20 @@ fun ListContent(
             itemsIndexed(todos) { index, todo ->
                 TodoItem(
                     todo = todo,
-                    onCompletedChange = onCompletedChange,
-                    onDeleteClick = onDeleteClick,
-                    onItemClick = onItemClick
+                    onCompletedChange = { completed ->
+                        onEvent(
+                            ListEvent.CompleteChanged(
+                                id = todo.id,
+                                isCompleted = completed
+                            )
+                        )
+                    },
+                    onDeleteClick = {
+                        onEvent(ListEvent.Delete(todo.id))
+                    },
+                    onItemClick = {
+                        onEvent(ListEvent.AddEdit(todo.id))
+                    }
                 )
 
                 if (index < todos.lastIndex) {
@@ -86,8 +113,8 @@ fun ListContent(
 }
 
 @Composable
-fun AddFabButton(onAddClick: () -> Unit) {
-    FloatingActionButton(onClick = onAddClick) {
+fun AddFabButton(onClick: () -> Unit) {
+    FloatingActionButton(onClick = onClick) {
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.fab_add_description)
@@ -105,10 +132,7 @@ private fun Preview() {
                 todo2,
                 todo1
             ),
-            onAddClick = {},
-            onItemClick = {},
-            onDeleteClick = {},
-            onCompletedChange = {}
+            onEvent = {}
         )
     }
 }

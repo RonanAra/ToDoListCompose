@@ -32,11 +32,13 @@ import br.com.todolistcompose.ui.theme.ToDoListComposeTheme
 
 @Composable
 fun AddEditScreen(
+    id: Long?,
     navigateBack: () -> Unit
 ) {
     val context = LocalContext.current.applicationContext
     val viewModel = viewModel<AddEditViewModel> {
         AddEditViewModel(
+            id = id,
             repository = TodoRepositoryImpl(
                 dao = TodoDatabaseProvider.provide(context).todoDao
             )
