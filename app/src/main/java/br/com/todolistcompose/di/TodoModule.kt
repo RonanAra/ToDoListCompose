@@ -7,6 +7,7 @@ import br.com.todolistcompose.data.datasource.TodoDataSource
 import br.com.todolistcompose.data.datasource.TodoDataSourceImpl
 import br.com.todolistcompose.presentation.features.addedit.AddEditViewModel
 import br.com.todolistcompose.presentation.features.list.ListViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.bind
@@ -19,6 +20,6 @@ object TodoModule : KoinModule {
         singleOf(::TodoDataSourceImpl) { bind<TodoDataSource>() }
 
         viewModelOf(::ListViewModel)
-        viewModelOf(::AddEditViewModel)
+        viewModel { (id: Long?) -> AddEditViewModel(id, get()) }
     }
 }
