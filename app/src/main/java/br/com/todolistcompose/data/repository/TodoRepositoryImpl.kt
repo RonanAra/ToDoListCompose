@@ -1,7 +1,7 @@
 package br.com.todolistcompose.data.repository
 
-import br.com.todolistcompose.data.database.dao.TodoDao
 import br.com.todolistcompose.data.database.entity.TodoEntity
+import br.com.todolistcompose.data.datasource.TodoDataSource
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.mapper.TodoEntityToTodoMapper
 import br.com.todolistcompose.domain.repository.TodoRepository
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class TodoRepositoryImpl(
-    private val dao: TodoDao
+    private val datasource: TodoDataSource
 ) : TodoRepository {
     override suspend fun insert(
         title: String,
@@ -17,7 +17,7 @@ class TodoRepositoryImpl(
         id: Long?
     ) {
         val entity = id?.let {
-            dao.getById(it)?.copy(
+            datasource.getById(it)?.copy(
                 title = title,
                 description = description
             )
@@ -26,25 +26,25 @@ class TodoRepositoryImpl(
             description = description,
             isCompleted = false
         )
-        dao.insert(entity)
+        datasource.insert(entity)
     }
 
     override suspend fun updateCompleted(
         id: Long,
         isCompleted: Boolean
     ) {
-        val existingEntity = dao.getById(id) ?: return
+        val existingEntity = datasource.getById(id) ?: return
         val updateEntity = existingEntity.copy(isCompleted = isCompleted)
-        dao.insert(updateEntity)
+        datasource.insert(updateEntity)
     }
 
     override suspend fun delete(id: Long) {
-        val existingEntity = dao.getById(id) ?: return
-        dao.delete(existingEntity)
+        val existingEntity = datasource.getById(id) ?: return
+        datasource.delete(existingEntity)
     }
 
     override fun getAll(): Flow<List<Todo>> {
-        return dao.getAll().map { entities ->
+        return datasource.getAll().map { entities ->
             entities.map { entity ->
                 TodoEntityToTodoMapper.mapFrom(entity)
             }
@@ -52,7 +52,7 @@ class TodoRepositoryImpl(
     }
 
     override suspend fun getById(id: Long): Todo? {
-        return dao.getById(id)?.let { entity ->
+        return datasource.getById(id)?.let { entity ->
             TodoEntityToTodoMapper.mapFrom(entity)
         }
     }
