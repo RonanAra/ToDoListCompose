@@ -4,6 +4,7 @@ import br.com.todolistcompose.data.database.entity.TodoEntity
 import br.com.todolistcompose.data.datasource.TodoDataSource
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.mapper.TodoEntityToTodoMapper
+import br.com.todolistcompose.domain.mapper.EntityToTodoListMapper
 import br.com.todolistcompose.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -44,10 +45,8 @@ class TodoRepositoryImpl(
     }
 
     override fun getAll(): Flow<List<Todo>> {
-        return datasource.getAll().map { entities ->
-            entities.map { entity ->
-                TodoEntityToTodoMapper.mapFrom(entity)
-            }
+        return datasource.getAll().map {
+            EntityToTodoListMapper.mapFrom(it)
         }
     }
 

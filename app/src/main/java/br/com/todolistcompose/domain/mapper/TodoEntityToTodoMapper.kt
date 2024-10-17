@@ -16,3 +16,18 @@ object TodoEntityToTodoMapper : Mapper<TodoEntity, Todo> {
         }
     }
 }
+
+object EntityToTodoListMapper : Mapper<List<TodoEntity>, List<Todo>> {
+    override fun mapFrom(from: List<TodoEntity>): List<Todo> {
+        return from.map { entity ->
+            with(entity) {
+                Todo(
+                    id = id,
+                    title = title,
+                    description = description,
+                    isCompleted = isCompleted
+                )
+            }
+        }
+    }
+}
