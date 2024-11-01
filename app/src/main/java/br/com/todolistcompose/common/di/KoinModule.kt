@@ -3,5 +3,5 @@ package br.com.todolistcompose.common.di
 import org.koin.core.module.Module
 
 interface KoinModule {
-    val module: Module
+    val module: Lazy<Module>
 }

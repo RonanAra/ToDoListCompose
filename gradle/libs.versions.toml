@@ -13,7 +13,8 @@ navigation = "2.8.0"
 lifecycle = "2.8.5"
 ksp = "2.0.20-1.0.24"
 kotlinxSerializationJson = "1.6.0"
-koin = "3.2.2"
+koin = "3.5.0"
+koinCoroutines = "3.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,13 +41,15 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koinCoroutines = { module = "io.insert-koin:koin-core-coroutines", version.ref = "koinCoroutines" }
 
 [bundles]
 common-libs = [
     "androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-activity-compose", "androidx-ui",
     "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3", "androidx-room-runtime",
     "androidx-room-ktx", "androidx-navigation-compose", "androidx-lifecycle-viewmodel-compose",
-    "androidx-lifecycle-runtime-compose", "kotlinx-serialization-json", "koin-core", "koin-android", "koin-compose"
+    "androidx-lifecycle-runtime-compose", "kotlinx-serialization-json", "koin-core", "koin-android", "koin-compose",
+    "koinCoroutines"
 ]
 
 [plugins]
