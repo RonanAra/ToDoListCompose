@@ -9,17 +9,15 @@ import br.com.todolistcompose.presentation.features.addedit.AddEditViewModel
 import br.com.todolistcompose.presentation.features.list.ListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.core.annotation.KoinExperimentalAPI
-import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.lazyModule
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@OptIn(KoinExperimentalAPI::class)
 object TodoModule : KoinModule {
 
-    override val module = lazyModule {
-        singleOf(::TodoRepositoryImpl) { bind<TodoRepository>() }
-        singleOf(::TodoDataSourceImpl) { bind<TodoDataSource>() }
+    override val module = module {
+        singleOf(::TodoRepositoryImpl) bind TodoRepository::class
+        singleOf(::TodoDataSourceImpl) bind TodoDataSource::class
 
         viewModelOf(::ListViewModel)
         viewModel { (id: Long?) -> AddEditViewModel(id, get()) }

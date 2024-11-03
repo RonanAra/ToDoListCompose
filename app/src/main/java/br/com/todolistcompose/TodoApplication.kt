@@ -15,10 +15,8 @@ class TodoApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@TodoApplication)
-            lazyModules(
-                TodoModule.module,
-                TodoDatabaseModule.module
-            )
+            modules(TodoModule.module)
+            lazyModules(TodoDatabaseModule.module)
         }
     }
 }
