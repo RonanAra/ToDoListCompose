@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -16,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +26,8 @@ import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo1
 import br.com.todolistcompose.domain.entity.todo2
 import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.components.ActionIcon
+import br.com.todolistcompose.presentation.components.SwipeItem
 import br.com.todolistcompose.presentation.components.TodoItem
 import br.com.todolistcompose.presentation.navigation.TodoDestinations
 import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
@@ -78,26 +82,35 @@ fun ListContent(
             contentPadding = PaddingValues(16.dp)
         ) {
             itemsIndexed(todos) { index, todo ->
-                TodoItem(
-                    todo = todo,
-                    onCompletedChange = { completed ->
-                        onEvent(
-                            ListEvent.CompleteChanged(
-                                id = todo.id,
-                                isCompleted = completed
-                            )
+                SwipeItem(
+                    action = {
+                        ActionIcon(
+                            icon = Icons.Filled.Delete,
+                            onClick = { onEvent(ListEvent.Delete(todo.id)) },
+                            backgroundColor = Color.White,
+                            tint = Color.Red,
+                            contentDescription = stringResource(R.string.ic_delete_description),
                         )
-                    },
-                    onDeleteClick = {
-                        onEvent(ListEvent.Delete(todo.id))
-                    },
-                    onItemClick = {
-                        onEvent(ListEvent.AddEdit(todo.id))
                     }
-                )
+                ) {
+                    TodoItem(
+                        todo = todo,
+                        onCompletedChange = { completed ->
+                            onEvent(
+                                ListEvent.CompleteChanged(
+                                    id = todo.id,
+                                    isCompleted = completed
+                                )
+                            )
+                        },
+                        onItemClick = {
+                            onEvent(ListEvent.AddEdit(todo.id))
+                        }
+                    )
 
-                if (index < todos.lastIndex) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    if (index < todos.lastIndex) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
         }

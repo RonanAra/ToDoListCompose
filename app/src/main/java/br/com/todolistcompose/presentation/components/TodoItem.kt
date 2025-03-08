@@ -7,23 +7,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.todolistcompose.R
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo2
 import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
@@ -32,7 +25,6 @@ import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 fun TodoItem(
     todo: Todo,
     onCompletedChange: (Boolean) -> Unit,
-    onDeleteClick: () -> Unit,
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -74,13 +66,6 @@ fun TodoItem(
                     )
                 }
             }
-            IconButton(onClick = onDeleteClick) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(R.string.ic_delete_description),
-                    tint = Color.Red
-                )
-            }
         }
     }
 }
@@ -92,7 +77,6 @@ private fun Preview() {
         TodoItem(
             todo = todo2,
             onCompletedChange = {},
-            onDeleteClick = {},
             onItemClick = {}
         )
     }
