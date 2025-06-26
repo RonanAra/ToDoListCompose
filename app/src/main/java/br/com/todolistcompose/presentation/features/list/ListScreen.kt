@@ -13,7 +13,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,35 +24,17 @@ import br.com.todolistcompose.R
 import br.com.todolistcompose.domain.entity.Todo
 import br.com.todolistcompose.domain.entity.todo1
 import br.com.todolistcompose.domain.entity.todo2
-import br.com.todolistcompose.presentation.UiEvent
 import br.com.todolistcompose.presentation.components.ActionIcon
 import br.com.todolistcompose.presentation.components.SwipeItem
 import br.com.todolistcompose.presentation.components.TodoItem
-import br.com.todolistcompose.presentation.navigation.TodoDestinations
 import br.com.todolistcompose.presentation.theme.ToDoListComposeTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ListScreen(
-    navigateToAddEditScreen: (id: Long?) -> Unit,
     viewModel: ListViewModel = koinViewModel()
 ) {
     val todos by viewModel.todos.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect { uiEvent ->
-            when (uiEvent) {
-                is UiEvent.Navigate<*> -> {
-                    when (uiEvent.route) {
-                        is TodoDestinations.AddEditRoute -> {
-                            navigateToAddEditScreen(uiEvent.route.id)
-                        }
-                    }
-                }
-                else -> {}
-            }
-        }
-    }
 
     ListContent(
         todos = todos,

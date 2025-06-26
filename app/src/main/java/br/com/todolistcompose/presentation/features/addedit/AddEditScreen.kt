@@ -31,7 +31,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AddEditScreen(
-    navigateBack: () -> Unit,
     viewModel: AddEditViewModel = koinViewModel()
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
@@ -40,11 +39,9 @@ fun AddEditScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
-                is UiEvent.Navigate<*> -> {}
                 is UiEvent.ShowSnackBar -> {
                     snackBarHostState.showSnackbar(message = uiEvent.message)
                 }
-                UiEvent.NavigateBack -> navigateBack()
             }
         }
     }

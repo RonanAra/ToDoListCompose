@@ -3,20 +3,16 @@ package br.com.todolistcompose.presentation.features.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.todolistcompose.domain.repository.TodoRepository
-import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.navigation.Navigator
 import br.com.todolistcompose.presentation.navigation.TodoDestinations.AddEditRoute
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ListViewModel(
+    private val navigator: Navigator,
     private val repository: TodoRepository
 ) : ViewModel() {
-
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
 
     val todos = repository.getAll()
         .stateIn(
@@ -38,7 +34,7 @@ class ListViewModel(
 
     private fun navigateToEdit(id: Long?) {
         viewModelScope.launch {
-            _uiEvent.send(UiEvent.Navigate(AddEditRoute(id)))
+            navigator.navigate(AddEditRoute(id))
         }
     }
 

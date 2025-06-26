@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.todolistcompose.domain.repository.TodoRepository
 import br.com.todolistcompose.presentation.UiEvent
+import br.com.todolistcompose.presentation.navigation.Navigator
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class AddEditViewModel(
     private val id: Long?,
+    private val navigator: Navigator,
     private val repository: TodoRepository
 ) : ViewModel() {
 
@@ -69,7 +71,7 @@ class AddEditViewModel(
                     description = description,
                     id = id
                 )
-                _uiEvent.send(UiEvent.NavigateBack)
+                navigator.navigateUp()
             }
         }
     }
