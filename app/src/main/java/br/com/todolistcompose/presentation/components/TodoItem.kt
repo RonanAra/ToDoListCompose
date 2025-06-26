@@ -29,7 +29,7 @@ fun TodoItem(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.padding(vertical = 8.dp),
         onClick = onItemClick,
         shape = MaterialTheme.shapes.medium,
         shadowElevation = 2.dp,
