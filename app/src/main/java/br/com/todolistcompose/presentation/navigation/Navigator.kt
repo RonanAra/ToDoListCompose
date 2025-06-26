@@ -12,6 +12,7 @@ interface Navigator {
         destination: TodoDestinations,
         navOptions: NavOptionsBuilder.() -> Unit = {},
     )
+    suspend fun finish()
 }
 
 class DefaultNavigator : Navigator {
@@ -29,6 +30,10 @@ class DefaultNavigator : Navigator {
                 navOptions = navOptions
             )
         )
+    }
+
+    override suspend fun finish() {
+        _navigationActions.trySend(NavigationAction.Finish)
     }
 
     override suspend fun navigateUp() {

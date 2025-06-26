@@ -1,7 +1,9 @@
 package br.com.todolistcompose.presentation.navigation
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
@@ -9,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import br.com.todolistcompose.presentation.MainActivity
 import br.com.todolistcompose.presentation.features.addedit.AddEditScreen
 import br.com.todolistcompose.presentation.features.addedit.AddEditViewModel
 import br.com.todolistcompose.presentation.features.list.ListScreen
@@ -24,6 +27,7 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun TodoNavHost() {
+    val activity: Activity = LocalContext.current as MainActivity
     val navController = rememberNavController()
     val navigator = koinInject<Navigator>()
 
@@ -33,6 +37,7 @@ fun TodoNavHost() {
                 action.navOptions(this)
             }
             NavigationAction.NavigateUp -> navController.navigateUp()
+            NavigationAction.Finish -> activity.finish()
         }
     }
 

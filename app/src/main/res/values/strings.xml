@@ -5,4 +5,8 @@
     <string name="fab_completed_description">Completed</string>
     <string name="description_place_holder">Description (optional)</string>
     <string name="title_place_holder">Title</string>
+    <string name="dialog_title_close_app">Sair do app</string>
+    <string name="dialog_message_close_app">Tem certeza que deseja sair do app?</string>
+    <string name="dialog_button_yes">Sim</string>
+    <string name="dialog_button_no">Não</string>
 </resources>
