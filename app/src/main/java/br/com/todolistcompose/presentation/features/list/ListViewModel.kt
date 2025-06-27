@@ -36,7 +36,7 @@ class ListViewModel(
                 isCompleted = event.isCompleted
             )
             is ListEvent.Delete -> delete(event.id)
-            ListEvent.FinishApp -> finishApp()
+            ListEvent.OnBackPressed -> onBackPressed()
             is ListEvent.ShowCloseAppDialog -> showCloseAppDialog(event.enable)
         }
     }
@@ -62,9 +62,9 @@ class ListViewModel(
         }
     }
 
-    private fun finishApp() {
+    private fun onBackPressed() {
         viewModelScope.launch {
-            navigator.finish()
+            navigator.onBackPressed()
         }
     }
 

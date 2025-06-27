@@ -37,7 +37,7 @@ fun TodoNavHost() {
                 action.navOptions(this)
             }
             NavigationAction.NavigateUp -> navController.navigateUp()
-            NavigationAction.Finish -> activity.finish()
+            NavigationAction.OnBackPressed -> activity.finish()
         }
     }
 

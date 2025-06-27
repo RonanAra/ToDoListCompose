@@ -1,7 +1,7 @@
 package br.com.todolistcompose.presentation.features.list
 
 sealed interface ListEvent {
-    data object FinishApp: ListEvent
+    data object OnBackPressed: ListEvent
     data class ShowCloseAppDialog(val enable: Boolean): ListEvent
     data class Delete(val id: Long) : ListEvent
     data class CompleteChanged(

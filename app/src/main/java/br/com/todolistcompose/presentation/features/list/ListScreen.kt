@@ -64,7 +64,7 @@ private fun ListContent(
 ) {
     if (state.showCloseAppDialog) {
         CloseAppDialog(
-            onConfirm = { onEvent(ListEvent.FinishApp) },
+            onConfirm = { onEvent(ListEvent.OnBackPressed) },
             onDismiss = { onEvent(ListEvent.ShowCloseAppDialog(false)) }
         )
     }

@@ -10,5 +10,5 @@ sealed interface NavigationAction {
     ) : NavigationAction
 
     data object NavigateUp : NavigationAction
-    data object Finish: NavigationAction
+    data object OnBackPressed: NavigationAction
 }
