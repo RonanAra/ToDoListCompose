@@ -24,7 +24,7 @@ class DefaultNavigator : Navigator {
         destination: TodoDestinations,
         navOptions: NavOptionsBuilder.() -> Unit,
     ) {
-        _navigationActions.trySend(
+        _navigationActions.send(
             NavigationAction.Navigate(
                 destination = destination,
                 navOptions = navOptions
@@ -33,10 +33,10 @@ class DefaultNavigator : Navigator {
     }
 
     override suspend fun onBackPressed() {
-        _navigationActions.trySend(NavigationAction.OnBackPressed)
+        _navigationActions.send(NavigationAction.OnBackPressed)
     }
 
     override suspend fun navigateUp() {
-        _navigationActions.trySend(NavigationAction.NavigateUp)
+        _navigationActions.send(NavigationAction.NavigateUp)
     }
 }
